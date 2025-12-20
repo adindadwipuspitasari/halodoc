@@ -62,9 +62,9 @@ def train_models(X_text, y):
     pred_smote = svm_smote.predict(X_test)
     acc_smote = accuracy_score(y_test, pred_smote)
 
-    return vectorizer, svm_no_smote, svm_smote, acc_no, acc_smote
+    return vectorizer, svm_no_smote, svm_smote, acc_no, acc_smote, y_train, y_train_res
 
-vectorizer, svm_no_smote, svm_smote, acc_no, acc_smote = train_models(X_text, y)
+vectorizer, svm_no_smote, svm_smote, acc_no, acc_smote, y_train, y_train_res = train_models(X_text, y)
 
 # =========================
 # HEADER
@@ -82,14 +82,29 @@ col1, col2 = st.columns(2)
 col1.metric("Akurasi SVM Tanpa SMOTE", f"{acc_no*100:.2f}%")
 col2.metric("Akurasi SVM Dengan SMOTE", f"{acc_smote*100:.2f}%")
 
-# =========================
-# DISTRIBUSI DATA
-# =========================
-st.subheader("📊 Distribusi Sentimen")
 
-fig, ax = plt.subplots()
-df["label"].value_counts().plot(kind="bar", ax=ax)
-st.pyplot(fig)
+st.subheader("📊 Distribusi Sentimen Data Latih")
+
+col1, col2 = st.columns(2)
+
+# ===== TANPA SMOTE =====
+with col1:
+    st.markdown("**Tanpa SMOTE (Data Asli)**")
+    fig1, ax1 = plt.subplots(figsize=(4, 3))
+    pd.Series(y_train).value_counts().plot(kind="bar", ax=ax1)
+    ax1.set_xlabel("Sentimen")
+    ax1.set_ylabel("Jumlah")
+    st.pyplot(fig1)
+
+# ===== DENGAN SMOTE =====
+with col2:
+    st.markdown("**Dengan SMOTE (Data Seimbang)**")
+    fig2, ax2 = plt.subplots(figsize=(4, 3))
+    pd.Series(y_train_res).value_counts().plot(kind="bar", ax=ax2)
+    ax2.set_xlabel("Sentimen")
+    ax2.set_ylabel("Jumlah")
+    st.pyplot(fig2)
+
 
 # =========================
 # INPUT ULASAN

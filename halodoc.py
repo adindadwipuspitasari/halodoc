@@ -89,7 +89,7 @@ col1, col2 = st.columns(2)
 
 # ===== TANPA SMOTE =====
 with col1:
-    st.markdown("**Tanpa SMOTE (Data Asli)**")
+    st.markdown("**Tanpa SMOTE**")
     fig1, ax1 = plt.subplots(figsize=(4, 3))
     pd.Series(y_train).value_counts().plot(kind="bar", ax=ax1)
     ax1.set_xlabel("Sentimen")
@@ -98,7 +98,7 @@ with col1:
 
 # ===== DENGAN SMOTE =====
 with col2:
-    st.markdown("**Dengan SMOTE (Data Seimbang)**")
+    st.markdown("**Dengan SMOTE**")
     fig2, ax2 = plt.subplots(figsize=(4, 3))
     pd.Series(y_train_res).value_counts().plot(kind="bar", ax=ax2)
     ax2.set_xlabel("Sentimen")
